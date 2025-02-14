@@ -59,7 +59,6 @@ def ejemplo1():
 def ejemplo2():
     return render_template('ejemplo2.html')
 
-
 @app.route('/hola')
 def hola():
     return"!!!Hola"
