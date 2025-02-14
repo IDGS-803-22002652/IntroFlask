@@ -21,6 +21,35 @@ def OperasBas():
         return render_template('OperasBas.html',resultado=resultado)
     else:
         return render_template('OperasBas.html')
+
+@app.route('/cinepolis',methods=['POST','GET'])
+def cinepolis():
+    if request.method=='POST':
+        boletos=int(request.form.get("boletos",0))
+        tarjeta=request.form.get("tarjeta","no")
+        compradores=int(request.form.get("compradores",1))
+        if boletos / compradores > 7:
+            return render_template('accionesCnp.html', resultado=" Máximo 7 boletos por persona.")
+        if boletos>5 and tarjeta=="si":
+            resultado=((boletos*12)*.85)*.90 
+            return render_template('accionesCnp.html',resultado=" " + str(round(resultado,2)) + "$")
+        elif boletos>5 and tarjeta=="no":
+            resultado=(boletos*12)*.85
+            return render_template('accionesCnp.html',resultado=" " + str(round(resultado,2)) + "$")
+        if 3 <= boletos <= 5 and tarjeta=="si":
+            resultado=((boletos*12)*.90)*.90
+            return render_template('accionesCnp.html',resultado=" " + str(round(resultado,2)) + "$")
+        elif 3 <= boletos <= 5 and tarjeta=="no":
+            resultado=(boletos*12)*.90
+            return render_template('accionesCnp.html',resultado=" " + str(round(resultado,2)) + "$")
+        if boletos<3 and tarjeta=="si":
+            resultado=(boletos*12)*.90
+            return render_template('accionesCnp.html',resultado=" " + str(round(resultado,2)) + "$")
+        if boletos<3 and tarjeta=="no":
+            resultado=(boletos*12)
+            return render_template('accionesCnp.html',resultado=" " + str(round(resultado,2)) + "$")
+    else:
+        return render_template('accionesCnp.html')
  
 @app.route('/ejemplo1')
 def ejemplo1():
